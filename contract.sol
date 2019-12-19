@@ -109,7 +109,7 @@ contract BookingHotel{
         BookingInfo memory bInfo;
         bInfo.booker =msg.sender;
         bInfo.roomId=_roomId;
-        bInfo.start=_start;
+        bInfo.start=start;
         bInfo.price=room.priceADay;
         bInfo.end=_end;
         bInfo.status=1;

@@ -8,7 +8,8 @@
           <sui-list-item v-for="(item, index) in bookingLst" :key="index"> 
             <sui-list-icon name="user" />
             <sui-list-content>
-              <a is="sui-list-header">{{item[0]}}</a>
+                <a v-if="Number(item[5])==0" style="color:red !important;" is="sui-list-header">{{item[0]}}</a>
+              <a v-else is="sui-list-header">{{item[0]}}</a>
               <sui-list-description>{{timeLabel(item)}}</sui-list-description>
             </sui-list-content>
           </sui-list-item>

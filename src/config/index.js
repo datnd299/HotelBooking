@@ -26,6 +26,20 @@ var Config = {
             "constant": false,
             "inputs": [
                 {
+                    "name": "_bookingId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "cancelBooking",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
                     "name": "_name",
                     "type": "string"
                 },
@@ -197,6 +211,10 @@ var Config = {
                 {
                     "name": "status",
                     "type": "uint256"
+                },
+                {
+                    "name": "id",
+                    "type": "uint256"
                 }
             ],
             "payable": false,
@@ -340,6 +358,6 @@ var Config = {
             "type": "function"
         }
     ],
-    ContractAddress:'0x642dd83eef2570e94c8065644176ab35324c03f9'
+    ContractAddress:'0x44f95d0b7b07cfa81428f59062cc0ef550040ccb'
 }
 export default Config

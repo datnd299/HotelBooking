@@ -18,10 +18,10 @@
       </sui-card-content>
       <sui-card-content extra>
         <span>
-          
+          <sui-button v-if="Number(room[5])==0" basic secondary>Canceled</sui-button>
         </span>
         <span slot="right">
-          <sui-button @click="cancelBooking()" basic negative>Cancel</sui-button>
+          <sui-button v-if="Number(room[5])==1" @click="cancelBooking()" basic negative>Cancel</sui-button>
         </span>
       </sui-card-content>
     </sui-card>
@@ -33,7 +33,7 @@ import BookingModal from '@/views/components/booking-modal';
 export default {
     methods: {
       cancelBooking(){
-        this.bookingModalVisible = true; 
+        HotelBooking.cancelBooking(Number(this.room[6]),{from:HotelBooking.acc,gas:3000000})
       }
     },
     computed: {
