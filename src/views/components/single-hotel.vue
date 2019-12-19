@@ -11,7 +11,8 @@
               <div class="extra content">
                 <div class="ui two buttons">
                   <!-- <div class="ui basic green button">Approve</div> -->
-                  <router-link :to="'/my-hotels/'+hotel[0]+'/rooms'" style="width:100%"> <div style="width:100%" class="ui basic teal button">Rooms</div></router-link>
+                  <router-link v-if="myHotel" :to="'/my-hotels/'+hotel[0]+'/rooms'" style="width:100%"> <div style="width:100%" class="ui basic teal button">Rooms</div></router-link>
+                  <router-link v-else :to="'/all-hotels/'+hotel[0]+'/rooms'" style="width:100%"> <div style="width:100%" class="ui basic teal button">Rooms</div></router-link>
                  
                 </div>
               </div>
@@ -23,7 +24,14 @@
 export default {
     props:{
         hotel:Array
-    }
+    },
+    computed: {
+      myHotel(){
+          console.log(this.$route.fullPath);
+          return this.$route.fullPath.includes('my-hotels');
+          
+      }
+    },
 }
 </script>
 <style lang="css">

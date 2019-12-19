@@ -7,7 +7,16 @@ import Layout from '@/layout/index'
 
 export const constantRoutes = [
     {
+        hidden: true,
+        path: '/login',
+        component: () =>
+            import('@/views/login/index'),
+
+
+    },
+    {
         path: '/',
+        redirect:'/login',
         component: Layout,
         children: [
             {
@@ -18,6 +27,7 @@ export const constantRoutes = [
 
 
             },
+            
             {
                 path: '/all-hotels',
                 component: () =>
@@ -38,7 +48,21 @@ export const constantRoutes = [
                 component: () =>
                     import('@/views/hotel-rooms/index'),
                 name: 'Hotel Rooms',
-            }
+            },
+            {
+                hidden: true,
+                path: '/all-hotels/:id/rooms',
+                component: () =>
+                    import('@/views/hotel-rooms/index'),
+                name: 'Hotel Rooms',
+            },
+            {
+                path: '/my-booking',
+                component: () =>
+                    import('@/views/my-booking/index'),
+                name: 'My Booking'
+
+            },
 
         ]
 

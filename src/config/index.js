@@ -4,7 +4,55 @@ var Config = {
             "constant": false,
             "inputs": [
                 {
-                    "name": "hotelId",
+                    "name": "_roomId",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_start",
+                    "type": "uint256"
+                },
+                {
+                    "name": "_end",
+                    "type": "uint256"
+                }
+            ],
+            "name": "bookRoom",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_name",
+                    "type": "string"
+                },
+                {
+                    "name": "_addressInfo",
+                    "type": "string"
+                },
+                {
+                    "name": "_phoneNum",
+                    "type": "string"
+                },
+                {
+                    "name": "_images",
+                    "type": "string"
+                }
+            ],
+            "name": "createNewHotel",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "_hotelId",
                     "type": "uint256"
                 },
                 {
@@ -33,6 +81,41 @@ var Config = {
             "payable": false,
             "stateMutability": "nonpayable",
             "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "hotelId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "newHotelCreated",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "name": "hotelId",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "roomId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "newRoomCreated",
+            "type": "event"
         },
         {
             "constant": true,
@@ -89,6 +172,87 @@ var Config = {
                     "type": "uint256"
                 }
             ],
+            "name": "BookingInfos",
+            "outputs": [
+                {
+                    "name": "booker",
+                    "type": "address"
+                },
+                {
+                    "name": "roomId",
+                    "type": "uint256"
+                },
+                {
+                    "name": "start",
+                    "type": "uint256"
+                },
+                {
+                    "name": "price",
+                    "type": "uint256"
+                },
+                {
+                    "name": "end",
+                    "type": "uint256"
+                },
+                {
+                    "name": "status",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getBookingsNum",
+            "outputs": [
+                {
+                    "name": "_num",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getHotelsNum",
+            "outputs": [
+                {
+                    "name": "_num",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getRoomsNum",
+            "outputs": [
+                {
+                    "name": "_num",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
             "name": "Hotels",
             "outputs": [
                 {
@@ -122,80 +286,6 @@ var Config = {
             ],
             "payable": false,
             "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getAllHotels",
-            "outputs": [
-                {
-                    "components": [
-                        {
-                            "name": "id",
-                            "type": "uint256"
-                        },
-                        {
-                            "name": "owner",
-                            "type": "address"
-                        },
-                        {
-                            "name": "name",
-                            "type": "string"
-                        },
-                        {
-                            "name": "addressInfo",
-                            "type": "string"
-                        },
-                        {
-                            "name": "phoneNum",
-                            "type": "string"
-                        },
-                        {
-                            "name": "images",
-                            "type": "string"
-                        },
-                        {
-                            "name": "status",
-                            "type": "uint256"
-                        },
-                        {
-                            "name": "roomIds",
-                            "type": "uint256[]"
-                        }
-                    ],
-                    "name": "_hotels",
-                    "type": "tuple[]"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "name": "_name",
-                    "type": "string"
-                },
-                {
-                    "name": "_addressInfo",
-                    "type": "string"
-                },
-                {
-                    "name": "_phoneNum",
-                    "type": "string"
-                },
-                {
-                    "name": "_images",
-                    "type": "string"
-                }
-            ],
-            "name": "createNewHotel",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -248,43 +338,8 @@ var Config = {
             "payable": false,
             "stateMutability": "view",
             "type": "function"
-        },
-        {
-            "inputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "hotelId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "newHotelCreated",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "name": "hotelId",
-                    "type": "uint256"
-                },
-                {
-                    "indexed": false,
-                    "name": "roomId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "newRoomCreated",
-            "type": "event"
         }
     ],
-    ContractAddress:'0x63732ed5a73d74dfd99ac5912fc909ef831e62ce'
+    ContractAddress:'0x642dd83eef2570e94c8065644176ab35324c03f9'
 }
 export default Config

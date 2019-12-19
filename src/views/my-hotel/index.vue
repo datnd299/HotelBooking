@@ -2,7 +2,7 @@
   <div>
     <hotel-modal @hotelCreated="onHotelCreated" v-model="hotelModalisOpen"></hotel-modal>
     <div>
-      <sui-button @click.native="toggleHotelModal" icon="plus" basic primary>Add Hotel</sui-button>
+      <sui-button @click.native="toggleHotelModal" icon="plus" basic primary v-if="myHotel">Add Hotel</sui-button>
     </div>
     <div class="ui stackable three column grid">
       <div class="row">
@@ -29,29 +29,39 @@ export default {
       this.hotelModalisOpen = !this.hotelModalisOpen;
     },
     onHotelCreated(hotel){
- 
+      console.log(hotel);
+      var id = HotelBooking.getHotelsNum();
+        HotelBooking.createNewHotel(hotel.name,hotel.address,hotel.contact,'',{from:HotelBooking.acc,gas:3000000});
+        this.hotels.push([id,'',hotel.name,hotel.address,hotel.contact]);
         
-        this.hotels.push(hotel);
-        HotelBooking.createNewHotel(hotel.name,hotel.address,hotel.contact,'',{from:HotelBooking.acc,gas:300000});
         this.toggleHotelModal();
-        
     }
+  },
+  computed:{
+    myHotel(){
+          
+          return this.$route.fullPath.includes('my-hotels');
+          
+      }
   },
   components: {
     SingleHotel,
     HotelModal
   },
   created() {
-    var i = 0;
-    while (true) {
-      try {
-        var hotel = HotelBooking.Hotels(i);
-        this.hotels.push(hotel);
-        i++;
-      } catch (error) {
-        break;
+    var numHt = HotelBooking.getHotelsNum().toNumber();
+    for (let i = 0; i < numHt; i++) {
+      if(this.myHotel){
+        if(HotelBooking.Hotels(i)[1]==HotelBooking.acc){
+          this.hotels.push(HotelBooking.Hotels(i));
+        }
+      }else{
+         this.hotels.push(HotelBooking.Hotels(i));
       }
+     
+      
     }
+  
   }
 };
 </script>

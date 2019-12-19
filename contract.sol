@@ -27,12 +27,17 @@ contract BookingHotel{
     struct BookingInfo{
         address booker;
         uint roomId;
-        
+        uint start;
+        uint price;
+        uint end;
+        uint status;
+        uint id;
     }
-   
+    
     mapping(address=>Hotel[]) public addressHotelsMap;
     Hotel[] public Hotels;
     Room[] public Rooms;
+    BookingInfo[] public BookingInfos;
     
     constructor() public {
         
@@ -48,6 +53,7 @@ contract BookingHotel{
         Hotel memory hotel;
         uint newId = Hotels.length;
         hotel.id = newId;
+        hotel.name = _name;
         hotel.owner = msg.sender;
         hotel.addressInfo = _addressInfo;
         hotel.phoneNum = _phoneNum;
@@ -66,8 +72,20 @@ contract BookingHotel{
         require(Hotels[hotelId].owner == msg.sender,'This address does not own this hotel');
         _;
     }
-    
-    function createRoom(uint hotelId, string memory _name, string memory _info, string memory _images,uint _priceADay, uint _cancelationFee) addressOwnHotel(msg.sender,hotelId)  public {
+      modifier roomIsNotBusy(uint roomId,uint start, uint end){
+          bool busy = false;
+        for(uint i = 0;i<BookingInfos.length;i++){
+            BookingInfo memory bInfo = BookingInfos[i];
+            if(bInfo.roomId == roomId){
+                if(!((start>=bInfo.end)||(end<=bInfo.start))){
+                    busy = true;
+                }
+            }
+        }
+        require(!busy,'Room is busy this time');
+        _;
+    }
+    function createRoom(uint _hotelId, string memory _name, string memory _info, string memory _images,uint _priceADay, uint _cancelationFee) addressOwnHotel(msg.sender,_hotelId)  public {
         Room memory room;
         uint newId =  Rooms.length;
         room.status = 1;
@@ -77,14 +95,39 @@ contract BookingHotel{
         room.images = _images;
         room.priceADay = _priceADay;
         room.cancelationFee = _cancelationFee;
+        room.hotelId = _hotelId;
         Rooms.push(room);
-        room.hotelId = hotelId;
-        Hotels[hotelId].roomIds.push(newId);
-        emit newRoomCreated(hotelId,newId);
+        
+        Hotels[_hotelId].roomIds.push(newId);
+        emit newRoomCreated(_hotelId,newId);
         
     }
-    function getAllHotels() public view returns(Hotel[] memory _hotels){
-        _hotels = Hotels;
+    
+    function bookRoom(uint _roomId,uint _start, uint _end) roomIsNotBusy(_roomId, _start, _end) public {
+        Room memory room = Rooms[_roomId];
+        uint id = BookingInfos.length;
+        BookingInfo memory bInfo;
+        bInfo.booker =msg.sender;
+        bInfo.roomId=_roomId;
+        bInfo.start=_start;
+        bInfo.price=room.priceADay;
+        bInfo.end=_end;
+        bInfo.status=1;
+        bInfo.id = id;
+        BookingInfos.push(bInfo);
     }
-   
+    function cancelBooking(uint _bookingId) public{
+        BookingInfos[_bookingId].status =0;
+       
+        
+    }
+    function getHotelsNum() public view returns(uint _num){
+        _num = Hotels.length;
+    }
+    function getRoomsNum() public view returns(uint _num){
+        _num = Rooms.length;
+    }
+    function getBookingsNum() public view returns(uint _num){
+        _num = BookingInfos.length;
+    }
 }

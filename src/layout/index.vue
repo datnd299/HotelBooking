@@ -2,6 +2,13 @@
   <div>
     <div>
       <sui-menu pointing secondary>
+        <div style="    font-size: 20px;
+    font-weight: 700;
+    margin-top: 4px;
+    color: #00b894;
+    padding: 5px;">
+          Hotel Booking
+        </div>
         <a
           is="sui-menu-item"
           v-for="(item,index) in menu"
@@ -12,15 +19,25 @@
           :href="item.path"
           :v-show="item.hidden!=true"
         />
+      
+        <sui-menu-menu position="right">
+        <a
+          is="sui-menu-item"
+         
+          :content="currentAcc"
+        
+        />
+      </sui-menu-menu>
       </sui-menu>
     </div>
-    <div style="padding:10px">
+    <div class="ui container" style="padding-top:10px">
       <router-view :key="key" />
     </div>
   </div>
 </template>
 <script>
 import Routes from '@/router'
+import HotelBooking from "@/utils/hotel-booking";
 export default {
   computed: {
     key() {
@@ -34,7 +51,13 @@ export default {
       
     },
   },
- 
+ computed: {
+   currentAcc(){
+    //  console.log(HotelBooking);
+     
+     return HotelBooking.acc;
+   }
+ },
   data() {
     return {
       items: ["All Hotels", "My Hotels"],
@@ -43,7 +66,7 @@ export default {
     };
   },
   created() {
-    var rts = this.$router.options.routes[0].children;
+    var rts = this.$router.options.routes[1].children;
       rts.forEach(o=>{
         if(!o.hidden){
           this.menu.push({

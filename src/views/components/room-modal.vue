@@ -1,47 +1,43 @@
 <template>
     <sui-modal v-model="value">
-      <sui-modal-header>Add new Hotel</sui-modal-header>
+      <sui-modal-header>Add new Room</sui-modal-header>
       <sui-modal-content>
         <sui-form>
           <sui-form-field>
             <label>Name</label>
-            <input v-model="hotel.name" placeholder="Name" />
+            <input v-model="room.name" placeholder="Name" />
           </sui-form-field>
           <sui-form-field>
-            <label>Address</label>
-            <input v-model="hotel.address" placeholder="Address" />
-          </sui-form-field>
-          <sui-form-field>
-            <label>Contact</label>
-            <input v-model="hotel.contact" placeholder="Contact" />
+            <label>Price</label>
+            <input v-model="room.price" placeholder="Address" />
           </sui-form-field>
           
           
         </sui-form>
       </sui-modal-content>
       <sui-modal-actions>
-        <sui-button positive @click.native="createHotel">Create</sui-button>
+        <sui-button positive @click.native="createRoom">Create</sui-button>
       </sui-modal-actions>
     </sui-modal>
 </template>
 <script>
 export default {
     props:{
-        value:Boolean
+        value:Boolean,
+        hotel:Array
     },
     data() {
         return {
-            hotel:{
+            room:{
                 name:'',
-                address:'',
-                contact:'',
+                price:'',
 
             }
         }
     },
     methods: {
-        createHotel(){
-            this.$emit('hotelCreated',this.hotel);
+        createRoom(){
+            this.$emit('roomCreated',this.room);
         }
     },
     watch:{
