@@ -34,6 +34,7 @@ export default {
     methods: {
       cancelBooking(){
         HotelBooking.cancelBooking(Number(this.room[6]),{from:HotelBooking.acc,gas:3000000})
+      this.room[5]=0;
       }
     },
     computed: {
