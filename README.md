@@ -25,5 +25,3 @@
 - Chạy trang web npm run serve
 	- Có thể cấu hình Provider ở src\utils\web3js.js
 
-	- 
-
