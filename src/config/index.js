@@ -358,6 +358,6 @@ var Config = {
             "type": "function"
         }
     ],
-    ContractAddress:'0xc0ebc57248304b62b868d7c36dd8a465243b90fa'
+    ContractAddress:'0xda8204f40cfa101b2698bd3fa4a729aeeeb50849'
 }
 export default Config

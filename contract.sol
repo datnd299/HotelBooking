@@ -35,6 +35,9 @@ contract BookingHotel{
     }
     
     mapping(address=>Hotel[]) public addressHotelsMap;
+    mapping(uint=>uint[]) public hotelRoomsMap;
+    mapping(address=>uint[]) public addressBookingInfosMap;
+    
     Hotel[] public Hotels;
     Room[] public Rooms;
     BookingInfo[] public BookingInfos;
@@ -93,11 +96,12 @@ contract BookingHotel{
         room.name = _name;
         room.info = _info;
         room.images = _images;
+        room.id = newId;
         room.priceADay = _priceADay;
         room.cancelationFee = _cancelationFee;
         room.hotelId = _hotelId;
         Rooms.push(room);
-        
+        hotelRoomsMap[_hotelId].push(newId);
         Hotels[_hotelId].roomIds.push(newId);
         emit newRoomCreated(_hotelId,newId);
         
@@ -109,17 +113,17 @@ contract BookingHotel{
         BookingInfo memory bInfo;
         bInfo.booker =msg.sender;
         bInfo.roomId=_roomId;
-        bInfo.start=start;
+        bInfo.start=_start;
         bInfo.price=room.priceADay;
         bInfo.end=_end;
         bInfo.status=1;
+        addressBookingInfosMap[msg.sender].push(id);
         bInfo.id = id;
         BookingInfos.push(bInfo);
     }
-    function cancelBooking(uint _bookingId) public{
+    function cancelBooking(uint _bookingId)  public{
         BookingInfos[_bookingId].status =0;
-       
-        
+ 
     }
     function getHotelsNum() public view returns(uint _num){
         _num = Hotels.length;
